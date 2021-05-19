@@ -12,6 +12,9 @@ export default createStore({
     category: [],
   },
   mutations: {
+    fetchList(state, feeds) {
+      state.feeds = feeds
+    },
     updateList(state, feeds) {
       state.feeds.push(...feeds)
     },
@@ -20,19 +23,29 @@ export default createStore({
     },
   },
   actions: {
-    async fetchFeeds({ commit }, category) {
-      console.log(category)
+    async fetchFeeds({ commit }, { category, ord }) {
+      console.log(category, ord)
       const res = await instance.get('/list', {
         params: {
           page: 3,
-          ord: "asc",
+          ord,
           category,
           limit: 10
         }
       })
-      console.log(res.data)
+      if (res.status === 200) commit('fetchList', res.data.data)
+      return res.data
+    },
+    async updateFeeds({ commit }, { category, ord }) {
+      const res = await instance.get('/list', {
+        params: {
+          page: 3,
+          ord,
+          category,
+          limit: 10
+        }
+      })
       if (res.status === 200) commit('updateList', res.data.data)
-      // return success/result to action caller
       return res.data
     },
     async fetchCategory({ commit }) {
