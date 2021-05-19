@@ -4,12 +4,27 @@
       <button>로그인</button>
     </div>
     <div class="ord">
-      <button @click="ord = 'asc'" :class="{ active: ord == 'asc' }">
+      <button
+        @click="params.ord = 'asc'"
+        :class="{ active: params.ord == 'asc' }"
+      >
         오름차순
       </button>
-      <button @click="ord = 'desc'" :class="{ active: ord == 'desc' }">
+      <button
+        @click="params.ord = 'desc'"
+        :class="{ active: params.ord == 'desc' }"
+      >
         내림차순
       </button>
+    </div>
+    <div class="filter" v-for="filter in filters" v-bind:key="filter">
+      <input
+        type="checkbox"
+        :id="filter.name"
+        :value="filter.id"
+        v-model="params.category"
+      />
+      <label :for="filter.name">{{ filter.name }}</label>
     </div>
     <div class="card" v-for="feed in $store.state.feeds" v-bind:key="feed.id">
       <!-- <div>
@@ -35,19 +50,17 @@
     name: "Feeds",
     data() {
       return {
-        ord: "asc",
-        params: {
-          category: [],
-          ord: "",
-        },
+        filters: [],
+        params: {},
         hasMoreList: true,
       };
     },
     methods: {
+      //무한스크롤
       async onScroll() {
         if (
           this.hasMoreList &&
-          window.scrollY + document.documentElement.clientHeight ==
+          window.scrollY + document.documentElement.clientHeight >=
             document.documentElement.scrollHeight
         ) {
           console.log("-reach endpoint-");
@@ -56,19 +69,26 @@
       },
     },
     async mounted() {
-      const res = await this.$store.dispatch("fetchCategory");
-      this.params.category = res.map((c) => c.id);
-      this.params.ord = this.ord;
-      this.hasMoreList = await this.$store.dispatch("fetchFeeds", this.params);
+      this.filters = await this.$store.dispatch("fetchCategory");
+      this.params.category = this.filters.map((c) => c.id);
       window.addEventListener("scroll", this.onScroll);
     },
     unmounted() {
       window.removeEventListener("scroll", this.onScroll);
     },
     watch: {
-      ord: async function(val) {
-        this.params.ord = val;
-        await this.$store.dispatch("fetchFeeds", this.params);
+      params: {
+        deep: true,
+        async handler() {
+          if (this.params.category.length) {
+            this.hasMoreList = await this.$store.dispatch(
+              "fetchFeeds",
+              this.params
+            );
+          } else {
+            this.$store.commit("fetchFeeds", []);
+          }
+        },
       },
     },
   };

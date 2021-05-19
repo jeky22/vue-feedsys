@@ -36,8 +36,7 @@ export default createStore({
   },
   actions: {
     async fetchFeeds({ commit }, params) {
-      params.page = 0
-      commit('setParams', params)
+      commit('setParams', { page: 1, ...params })
       const res = await instance.get('/list', { params: this.state.params })
       if (res.status === 200) {
         commit('fetchFeeds', res.data.data)
@@ -51,8 +50,7 @@ export default createStore({
       }
       return true
     },
-    async updateFeeds({ commit }, params) {
-      commit('setParams', params)
+    async updateFeeds({ commit }) {
       const res = await instance.get('/list', { params: this.state.params })
       if (res.status === 200) {
         commit('updateFeeds', res.data.data)
