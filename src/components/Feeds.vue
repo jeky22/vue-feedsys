@@ -11,8 +11,9 @@
         내림차순
       </button>
     </div>
-    <div v-for="feed in $store.state.feeds" v-bind:key="feed.id">
-      <div>
+    <div class="card" v-for="feed in $store.state.feeds" v-bind:key="feed.id">
+      <!-- <div>
+        {{ feed.id }}
         {{ feed.category_id }}
       </div>
       <div>
@@ -22,7 +23,9 @@
       <div>
         {{ feed.title }}
         {{ feed.contents }}
-      </div>
+      </div> -->
+      {{ feed.id }}
+      {{ feed.contents }}
     </div>
   </div>
 </template>
@@ -37,14 +40,30 @@
           category: [],
           ord: "",
         },
+        hasMoreList: true,
       };
+    },
+    methods: {
+      async onScroll() {
+        if (
+          this.hasMoreList &&
+          window.scrollY + document.documentElement.clientHeight ==
+            document.documentElement.scrollHeight
+        ) {
+          console.log("-reach endpoint-");
+          this.hasMoreList = await this.$store.dispatch("updateFeeds");
+        }
+      },
     },
     async mounted() {
       const res = await this.$store.dispatch("fetchCategory");
       this.params.category = res.map((c) => c.id);
       this.params.ord = this.ord;
-      console.log("2", this.params);
-      await this.$store.dispatch("fetchFeeds", this.params);
+      this.hasMoreList = await this.$store.dispatch("fetchFeeds", this.params);
+      window.addEventListener("scroll", this.onScroll);
+    },
+    unmounted() {
+      window.removeEventListener("scroll", this.onScroll);
     },
     watch: {
       ord: async function(val) {
@@ -65,5 +84,10 @@
     .active {
       background: green;
     }
+  }
+  .card {
+    background-color: wheat;
+    height: 100px;
+    border: 1px solid;
   }
 </style>

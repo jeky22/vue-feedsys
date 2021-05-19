@@ -10,47 +10,65 @@ export default createStore({
   state: {
     feeds: [],
     category: [],
+    params: {
+      page: 0,
+      ord: "asc",
+      category: [],
+      limit: 10
+    }
   },
   mutations: {
-    fetchList(state, feeds) {
+    fetchFeeds(state, feeds) {
       state.feeds = feeds
     },
-    updateList(state, feeds) {
+    updateFeeds(state, feeds) {
       state.feeds.push(...feeds)
     },
-    updateCategory(state, category) {
+    setCategory(state, category) {
       state.category = category
     },
+    setParams(state, params) {
+      Object.assign(state.params, params)
+    },
+    increasePage(state) {
+      state.params.page++
+    }
   },
   actions: {
-    async fetchFeeds({ commit }, { category, ord }) {
-      console.log(category, ord)
-      const res = await instance.get('/list', {
-        params: {
-          page: 3,
-          ord,
-          category,
-          limit: 10
+    async fetchFeeds({ commit }, params) {
+      params.page = 0
+      commit('setParams', params)
+      const res = await instance.get('/list', { params: this.state.params })
+      if (res.status === 200) {
+        commit('fetchFeeds', res.data.data)
+        if (res.data.next_page_url) {
+          commit('increasePage')
         }
-      })
-      if (res.status === 200) commit('fetchList', res.data.data)
-      return res.data
+        else {
+          console.log('--lastPage--')
+          return false
+        }
+      }
+      return true
     },
-    async updateFeeds({ commit }, { category, ord }) {
-      const res = await instance.get('/list', {
-        params: {
-          page: 3,
-          ord,
-          category,
-          limit: 10
+    async updateFeeds({ commit }, params) {
+      commit('setParams', params)
+      const res = await instance.get('/list', { params: this.state.params })
+      if (res.status === 200) {
+        commit('updateFeeds', res.data.data)
+        if (res.data.next_page_url) {
+          commit('increasePage')
         }
-      })
-      if (res.status === 200) commit('updateList', res.data.data)
-      return res.data
+        else {
+          console.log('--lastPage--')
+          return false
+        }
+      }
+      return true
     },
     async fetchCategory({ commit }) {
       const res = await instance.get('/category')
-      if (res.status === 200) commit('updateCategory', res.data.category)
+      if (res.status === 200) commit('setCategory', res.data.category)
       return res.data.category
     },
   },
