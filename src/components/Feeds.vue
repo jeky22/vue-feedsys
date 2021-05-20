@@ -27,7 +27,8 @@
       <label :for="filter.name">{{ filter.name }}</label>
     </div>
     <div class="card" v-for="feed in $store.state.feeds" v-bind:key="feed.id">
-      <!-- <div>
+      <router-link :to="'/' + feed.id">
+        <!-- <div>
         {{ feed.id }}
         {{ feed.category_id }}
       </div>
@@ -39,8 +40,9 @@
         {{ feed.title }}
         {{ feed.contents }}
       </div> -->
-      {{ feed.id }}
-      {{ feed.contents }}
+        {{ feed.id }}
+        {{ feed.contents }}
+      </router-link>
     </div>
   </div>
 </template>

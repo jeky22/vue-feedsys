@@ -69,6 +69,12 @@ export default createStore({
       if (res.status === 200) commit('setCategory', res.data.category)
       return res.data.category
     },
+    async fetchDetail(_, params) {
+      const res = await instance.get('/view', { params })
+      // console.log(res)
+      if (res.status === 200) return res.data.data
+      return false
+    }
   },
   modules: {
   }
