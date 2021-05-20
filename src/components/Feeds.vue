@@ -26,8 +26,8 @@
       />
       <label :for="filter.name">{{ filter.name }}</label>
     </div>
-    <div class="card" v-for="feed in $store.state.feeds" v-bind:key="feed.id">
-      <router-link :to="'/' + feed.id">
+    <div v-for="(feed, index) in $store.state.feeds" v-bind:key="feed.id">
+      <router-link class="card" :to="'/' + feed.id">
         <!-- <div>
         {{ feed.id }}
         {{ feed.category_id }}
@@ -43,6 +43,13 @@
         {{ feed.id }}
         {{ feed.contents }}
       </router-link>
+      <h2
+        v-if="(index + 1) % 3 === 0 && $store.state.ads[(index - 2) / 3]"
+        style="height:140px; background:red"
+      >
+        광고입니다
+        {{ $store.state.ads[(index - 2) / 3].id }}
+      </h2>
     </div>
   </div>
 </template>
@@ -109,6 +116,7 @@
   }
   .card {
     background-color: wheat;
+    display: flex;
     height: 100px;
     border: 1px solid;
   }
