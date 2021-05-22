@@ -1,0 +1,27 @@
+/* Colors: */
+$device: "Only screen and (max-width : 768px) ";
+$desktop: "screen and (min-width : 769px)";
+$--unnamed-color-ffffff: #ffffff;
+$--unnamed-color-00c854: #00c854;
+$--unnamed-color-495057: #495057;
+$--unnamed-color-212529: #212529;
+$--unnamed-color-f4f5f7: #f4f5f7;
+$--unnamed-color-dee2e6: #dee2e6;
+$--unnamed-color-ff000033: #ff0000;
+$--unnamed-color-fa5252: #fa5252;
+$--unnamed-color-9ea5ab: #9ea5ab;
+
+$device: "Only screen and (max-width : 768px) ";
+$desktop: "screen and (min-width : 769px)";
+
+@mixin device {
+  @media #{$device} {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media #{$desktop} {
+    @content;
+  }
+}

@@ -1,0 +1,232 @@
+@import "./variables.scss";
+
+* {
+  box-sizing: border-box;
+}
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include device {
+    border: 5px #f4f5f7 solid;
+  }
+}
+#nav {
+  width: 100%;
+  background: $--unnamed-color-ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 1px 5px #00000012;
+  height: 70px;
+  font: normal normal normal 16px/25px Noto Sans CJK KR;
+  display: flex;
+  justify-content: center;
+  div {
+    width: 100%;
+    max-width: 1140px;
+    margin: auto;
+    padding: 5px;
+  }
+}
+
+.home {
+  flex-wrap: nowrap;
+  display: flex;
+  max-width: 1140px;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  @include desktop {
+    padding: 50px 5px 0 5px;
+  }
+  @include device {
+    .login-section {
+      display: none;
+    }
+  }
+
+  .login-section {
+    flex: 0 0 235px;
+    padding: 10px 0;
+    button {
+      width: 100%;
+      border: 0;
+      background: #00c854 0% 0% no-repeat padding-box;
+      height: 60px;
+      color: $--unnamed-color-ffffff;
+      font: normal normal bold 22px/25px SpoqaHanSans;
+      border-radius: 5px;
+    }
+  }
+  .main-section {
+    max-width: 865px;
+    width: 100%;
+    @include desktop {
+      padding: 0 10px;
+    }
+    @include device {
+      background: $--unnamed-color-f4f5f7 0% 0% no-repeat padding-box;
+    }
+  }
+}
+// @include device {
+//   .home,
+//   .main-section {
+//     padding: 0px;
+//   }
+// }
+a {
+  text-decoration: none;
+  color: unset;
+}
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  margin: 2px 0;
+  padding: 10px 0;
+}
+.order {
+  // width: 100%;
+  button {
+    color: $--unnamed-color-495057;
+    background-color: white;
+    border: 0;
+    font: normal normal normal 13px/25px SpoqaHanSans;
+    cursor: pointer;
+    &.active::before {
+      background: #00c854;
+    }
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      // margin: -5px 10px 0 0;
+      vertical-align: middle;
+      background: #e1e4e7;
+      border-radius: 50%;
+      // color: ;
+    }
+  }
+}
+.filter-button {
+  background: #ffffff;
+  width: 48px;
+  height: 24px;
+  background: $--unnamed-color-ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #e1e4e7;
+  border-radius: 3px;
+}
+.card {
+  background: $--unnamed-color-ffffff 0% 0% no-repeat padding-box;
+  padding: 20px 30px;
+  margin: 5px 0;
+
+  @include desktop {
+    border: 1px solid #e1e4e7;
+    margin: 14px 0 30px 0;
+    border-radius: 5px;
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  .inline {
+    display: flex;
+    font-size: 13px;
+    align-items: center;
+    @at-root.space-between {
+      justify-content: space-between;
+      color: #7e848a;
+    }
+    @at-root.flex-start {
+      border-top: 1px #e1e4e7 solid;
+      margin-top: 13px;
+      padding-top: 13px;
+      margin-bottom: 17px;
+    }
+    .user_id {
+      color: $--unnamed-color-00c854;
+      padding-right: 10px;
+      margin-right: 10px;
+      border-right: 1px #e1e4e7 solid;
+    }
+  }
+  .inline-text {
+    display: grid;
+  }
+  .title,
+  .contents {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 6px;
+  }
+  .title,
+  .ads-title {
+    text-align: left;
+    font: normal normal bold 18px/28px SpoqaHanSans;
+    color: #282c30;
+  }
+  .contents .ads-contents {
+    color: $--unnamed-color-495057;
+    font: normal normal normal 16px/25px SpoqaHanSans;
+  }
+
+  img {
+    object-fit: cover;
+    max-height: 180px;
+    @include desktop {
+      width: 310px;
+    }
+    @include device {
+      width: 100%;
+    }
+  }
+  .ads-inline {
+    display: flex;
+    @include device {
+      flex-direction: column;
+    }
+    .ads-between {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+  .ads-title,
+  .ads-contents {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    @include desktop {
+      margin: 0 30px;
+    }
+  }
+  .ads-title {
+    -webkit-line-clamp: 2;
+    font: normal normal bold 18px/28px SpoqaHanSans;
+    color: #282c30;
+  }
+  .ads-contents {
+    -webkit-line-clamp: 4;
+    color: $--unnamed-color-495057;
+    font: normal normal normal 16px/25px SpoqaHanSans;
+  }
+  .sponsered {
+    padding-bottom: 16px;
+    text-align: left;
+    font: normal normal normal 13px/25px SpoqaHanSans;
+    letter-spacing: 0px;
+    color: #adb5bd;
+    opacity: 1;
+  }
+}

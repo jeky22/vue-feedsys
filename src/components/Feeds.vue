@@ -1,70 +1,64 @@
 <template>
-  <div class="container">
-    <div>
+  <section class="login-section">
+    <div class="login">
       <button>로그인</button>
     </div>
-    <div class="ord">
-      <button
-        @click="params.ord = 'asc'"
-        :class="{ active: params.ord == 'asc' }"
-      >
-        오름차순
+  </section>
+  <section class="main-section">
+    <div class="options">
+      <div class="order">
+        <button
+          @click="params.ord = 'asc'"
+          :class="{ active: params.ord == 'asc' }"
+        >
+          오름차순
+        </button>
+        <button
+          @click="params.ord = 'desc'"
+          :class="{ active: params.ord == 'desc' }"
+        >
+          내림차순
+        </button>
+      </div>
+      <button class="filter-button" @click="modalToggle = !modalToggle">
+        필터
       </button>
-      <button
-        @click="params.ord = 'desc'"
-        :class="{ active: params.ord == 'desc' }"
-      >
-        내림차순
-      </button>
-    </div>
-    <div class="filter" v-for="filter in filters" v-bind:key="filter">
-      <input
-        type="checkbox"
-        :id="filter.name"
-        :value="filter.id"
-        v-model="params.category"
+      <Modal
+        v-if="modalToggle"
+        :filters="filters"
+        :categoryValue="params.category"
+        @close-modal="modalToggle = false"
+        @params-change="(val) => setParams(val)"
       />
-      <label :for="filter.name">{{ filter.name }}</label>
     </div>
-    <div v-for="(feed, index) in $store.state.feeds" v-bind:key="feed.id">
-      <router-link class="card" :to="'/' + feed.id">
-        <!-- <div>
-        {{ feed.id }}
-        {{ feed.category_id }}
-      </div>
-      <div>
-        {{ feed.user_id }}
-        {{ feed.created_at }}
-      </div>
-      <div>
-        {{ feed.title }}
-        {{ feed.contents }}
-      </div> -->
-        {{ feed.id }}
-        {{ feed.contents }}
-      </router-link>
-      <h2
-        v-if="(index + 1) % 3 === 0 && $store.state.ads[(index - 2) / 3]"
-        style="height:140px; background:red"
-      >
-        광고입니다
-        {{ $store.state.ads[(index - 2) / 3].id }}
-      </h2>
+    <div class="container">
+      <Cards :filterName="filters" />
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
+  import Modal from "./Modal";
+  import Cards from "./Cards";
+
   export default {
     name: "Feeds",
+    components: {
+      Modal,
+      Cards,
+    },
     data() {
       return {
         filters: [],
-        params: {},
+        params: { ord: "asc", category: [] },
         hasMoreList: true,
+        modalToggle: false,
       };
     },
     methods: {
+      setParams(val) {
+        this.params.category = val;
+      },
       //무한스크롤
       async onScroll() {
         if (
@@ -104,20 +98,4 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-  .container {
-    display: grid;
-  }
-  .ord {
-    border: 0;
-    .active {
-      background: green;
-    }
-  }
-  .card {
-    background-color: wheat;
-    display: flex;
-    height: 100px;
-    border: 1px solid;
-  }
-</style>
+<style scoped lang="scss"></style>

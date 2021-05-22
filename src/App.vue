@@ -1,18 +1,6 @@
 <template>
-  <div id="nav">이제찬</div>
+  <div id="nav">
+    <div>이제찬</div>
+  </div>
   <router-view />
 </template>
-
-<style lang="scss">
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-  }
-
-  #nav {
-    border-bottom: 1px solid;
-  }
-</style>
