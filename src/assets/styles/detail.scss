@@ -1,0 +1,66 @@
+@import "./variables.scss";
+
+.container {
+  max-width: 1140px;
+  @include device {
+    padding: 0 17px;
+  }
+  @include desktop {
+    margin: 0 20px;
+  }
+}
+.question-card {
+  border-top: 1px solid $color-green;
+  border-bottom: 1px solid $color-green;
+  padding: 20px 0;
+  @include desktop {
+    border: 1px solid $color-green;
+    border-radius: 5px;
+    padding: 20px 30px;
+  }
+  .title {
+    font: normal normal bold 18px/28px SpoqaHanSans;
+    margin-bottom: 5px;
+  }
+  .contents {
+    font: normal normal normal 16px/25px SpoqaHanSans;
+    margin: 10px 0;
+  }
+  .created {
+    font: normal normal normal 13px/25px SpoqaHanSans;
+    color: #adb5bd;
+  }
+}
+.answer-header {
+  font: normal normal normal 16px/25px SpoqaHanSans;
+  color: #495057;
+  margin-top: 30px;
+  span {
+    color: $color-green;
+  }
+}
+.answer-card {
+  border-top: 1px solid $color-border;
+  border-bottom: 1px solid $color-border;
+  padding: 0 30px;
+  margin: 15px 0;
+  @include desktop {
+    border: 1px solid $color-border;
+    border-radius: 5px;
+    padding: 20px 30px;
+  }
+  .username {
+    font: normal normal normal 16px/25px SpoqaHanSans;
+    color: #7e848a;
+    border-bottom: 1px $color-border solid;
+    padding: 10px 0;
+  }
+  .contents {
+    margin: 15px 0;
+    font: normal normal normal 16px/25px SpoqaHanSans;
+  }
+  .created {
+    font: normal normal normal 13px/25px SpoqaHanSans;
+    color: #8d97a2;
+  }
+}

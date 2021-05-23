@@ -1,18 +1,9 @@
 /* Colors: */
 $device: "Only screen and (max-width : 768px) ";
 $desktop: "screen and (min-width : 769px)";
-$--unnamed-color-ffffff: #ffffff;
-$--unnamed-color-00c854: #00c854;
-$--unnamed-color-495057: #495057;
-$--unnamed-color-212529: #212529;
-$--unnamed-color-f4f5f7: #f4f5f7;
-$--unnamed-color-dee2e6: #dee2e6;
-$--unnamed-color-ff000033: #ff0000;
-$--unnamed-color-fa5252: #fa5252;
-$--unnamed-color-9ea5ab: #9ea5ab;
 
-$device: "Only screen and (max-width : 768px) ";
-$desktop: "screen and (min-width : 769px)";
+$color-green: #00c854;
+$color-border: #e1e4e7;
 
 @mixin device {
   @media #{$device} {
@@ -24,4 +15,21 @@ $desktop: "screen and (min-width : 769px)";
   @media #{$desktop} {
     @content;
   }
+}
+
+@mixin title-font {
+  font: normal normal bold 18px/28px SpoqaHanSans;
+  color: #282c30;
+}
+
+@mixin content-font {
+  font: normal normal normal 16px/25px SpoqaHanSans;
+  color: #495057;
+}
+@mixin sub-font {
+  font: normal normal normal 13px/25px SpoqaHanSans;
+  color: #495057;
+}
+@mixin btn-font {
+  font: normal normal bold 22px/25px SpoqaHanSans;
 }
