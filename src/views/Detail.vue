@@ -1,7 +1,27 @@
 <template>
-  <h1>{{ $route.params.id }}</h1>
-  <h1>dd</h1>
-  <h3>{{ data.contents }}</h3>
+  <div class="container">
+    <div v-if="loading" class="question-card ">
+      <div class="title">
+        {{ question.title }}
+      </div>
+      <div class="contents">
+        {{ question.contents }}
+      </div>
+      <div class="created">
+        {{ question.created_at.split("T")[0] }}
+      </div>
+    </div>
+    <div class="answer">
+      <div class="answer-header">
+        답변 <span>{{ answer.length }}</span>
+      </div>
+      <div class="answer-card" v-for="(reply, index) in answer" :key="index">
+        <div class="username">{{ reply.user.name }}</div>
+        <div class="contents">{{ reply.contents }}</div>
+        <div class="created">{{ reply.created_at.split("T")[0] }}</div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -9,20 +29,23 @@
     name: "Feeds",
     data() {
       return {
-        data: {},
+        question: {},
+        answer: [],
+        loading: false,
       };
     },
     methods: {},
     async mounted() {
-      this.data = await this.$store.dispatch("fetchDetail", {
-        id: this.$route.params.id,
-      });
-      console.log(this.data);
+      const { title, created_at, contents, reply } = await this.$store.dispatch(
+        "fetchDetail",
+        {
+          id: this.$route.params.id,
+        }
+      );
+      this.question = { title, created_at, contents };
+      console.log(reply);
+      this.answer = reply;
+      this.loading = true;
     },
-    unmounted() {},
-    watch: {},
   };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"></style>
