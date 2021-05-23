@@ -42,7 +42,6 @@
     },
     methods: {
       submitFilter() {
-        console.log("aa", this.category);
         this.$emit("params-change", this.category);
         this.$emit("close-modal");
       },

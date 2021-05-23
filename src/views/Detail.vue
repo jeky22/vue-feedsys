@@ -43,7 +43,6 @@
         }
       );
       this.question = { title, created_at, contents };
-      console.log(reply);
       this.answer = reply;
       this.loading = true;
     },
